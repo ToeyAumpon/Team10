@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>新規登録</title>
+    <link rel="stylesheet" th:href="@{css/sign_up.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="box">
+    <header>
+        <h2>新規登録</h2>
+    </header>
+	
+<!--    <form th:action="@{/sign_up}" method="post" name="Sign-Up" onsubmit="return checkPassword()" autocomplete="off"-->
+<!--	 	th:object="${projectUser}">-->
+    <form th:action="@{/sign_up}" method="post" th:object="${projectUser}" onsubmit="return checkPassword()" autocomplete="off">
+
+        <div class="user-login">
+            <label for="username"><b>ユーザー名：</b></label>
+            <input type="text" id="username" th:field="*{username}" required><br>
+			<span id="username-error" th:text="${usernamelError}" class="error"></span>
+        </div>
+        <div class="user-register">
+            <label for="email"><b>メールアドレス：</b></label>
+            <input type="text" id="email" th:field="*{email}" required><br>
+			<span id="email-error" th:text="${emailError}" class="error"></span>
+        </div>
+
+        <div class="user-login">
+            <label for="password"><b>パスワード：</b></label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+       
+       <div class="user-register">
+            <label for="password2"><b>パスワード確認：</b></label>
+            <input type="password" id="password2" required><br><!--<br>がないとエラーメッセージのためパスワードの入力欄がずれてしまう-->
+            <span id="password-error" class="error"></span>
+       </div>   
+        <div class="submit">
+            <button id="btn" type="submit" class="submit-button">
+                <b>登録</b>
+            </button>
+        </div>
+        
+    </form>
+    
+    <footer>
+        <button class="link" onclick="location.href='/login'">ログイン画面に戻る</button>
+    </footer>
+    </div>
+<script>//パスワード比較関数。一致しなけらばエラーメッセージが出ます
+	let username = document.getElementById("username")
+	let usernameerror = document.getElementById("username-error")
+	let email = document.getElementById("email")
+	let emailerror = document.getElementById("email-error")
+    let password = document.getElementById("password")
+    let password_confirmation = document.getElementById("password2")
+    let error = document.getElementById("password-error")
+	
+    function checkPassword(){
+    //入力値取得
+        let input1 = password.value
+        let input2 = password_confirmation.value
+		let user = username.value
+		let email_address = email.value
+		let pattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9._%+-]{1,}$/;
+	//ユーザー名の文字数制限
+	    if(user.length > 50){
+		   usernameerror.textContent = "50文字を超えるユーザー名は入力できません"
+		   return false
+		}
+	//emailの文字数制限
+	    if(email_address.length >= 255){
+	       emailerror.textContent = "メールアドレスが長すぎます"
+	       return false
+	    }
+	//emailの表現制限
+	    if (!pattern.test(email_address)) {
+	        emailerror.textContent = "入力された情報は既に使用されているか、無効な形式です"
+	        return false;
+	    }
+    //パスワード比較
+        if(input1 != input2){
+            error.textContent = "入力されたパスワードが一致しない"
+            return false //送信を止める
+        }
+	//パスワードの文字数制限
+	    if(input1.length >= 255){
+			error.textContent = "パスワードが長すぎます"
+			return false
+		}
+		if(input2.length >= 255){
+			error.textContent = "パスワードが長すぎます"
+			return false 
+		}
+		
+        //一致していれば送信
+		emailerror.textContent = ""
+        error.textContent = ""
+        return true
+
+    }
+</script>
+</body>
+</html>

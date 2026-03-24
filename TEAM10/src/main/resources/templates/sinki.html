@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>新規投稿画面</title>
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/reset.min.css"/>
+<link rel="stylesheet" href="sinki.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="form-wrapper">
+        <form th:action="@{/sinki}" method="post" th:object="${projectPost}" id="postForm" enctype="multipart/form-data">
+            <h1>新規投稿画面</h1>
+            <label for="title">タイトルを入力してください </label>
+            <input type="text" id="titleInput" placeholder="text" th:field="*{title}" required>
+
+            <label for="content">内容を入力してください </label>
+            <textarea placeholder="text" id="content" th:field="*{content}"></textarea>
+			
+			
+			
+			
+			<label for="imageUpload">画像をアップロード(最大6枚)</label>
+
+			<div class="upload-box">
+
+			    <div class="file-upload-wrapper">
+			        <button type="button" class="custom-file-btn">画像を選択</button>
+			        <input type="file" id="imageUpload" accept="image/*" name="image" multiple>
+			    </div>
+
+			    <div id="fileCount" class="file-count">現在 0 枚選択中</div>
+			    <div id="previewContainer" class="preview-container"></div>
+
+			</div>
+			
+			
+
+            <label for="tag">タグ付け</label>
+            <input type="text" id="tag" name="tag" placeholder="#text">
+
+            <button type="submit" class="submit-btn"><b>投稿</b></button>
+
+            <div class="backbutton">
+                <input type="button" class="back-btn" onclick="location.href='/itirann'" value="一覧表示に戻る">
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+const form = document.getElementById("postForm");
+const titleInput = document.getElementById("titleInput");
+const imageUpload = document.getElementById("imageUpload");
+const previewContainer = document.getElementById("previewContainer");
+
+let selectedFiles = [];
+
+// ====== 設定値 ======
+const MAX_FILE_SIZE = 5 * 1024 * 1024;   // 1枚 5MB
+const MAX_TOTAL_SIZE = 20 * 1024 * 1024; // 合計 20MB
+const MAX_FILES = 6;                     // 最大 6枚
+// ====================
+
+
+// ★ 枚数表示更新
+function updateFileCount() {
+    const fileCount = document.getElementById("fileCount");
+    fileCount.textContent = `現在 ${selectedFiles.length} 枚選択中`;
+}
+
+
+// プレビュー描画
+function renderPreviews() {
+    previewContainer.innerHTML = "";
+
+    selectedFiles.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "preview-item";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+
+        // ★ 容量表示（KB または MB）
+        const sizeLabel = document.createElement("div");
+        sizeLabel.className = "file-size";
+
+        if (file.size < 1024 * 1024) {
+            sizeLabel.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+        } else {
+            sizeLabel.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+        }
+
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "remove-btn";
+        removeBtn.textContent = "×";
+        removeBtn.onclick = () => {
+            selectedFiles.splice(index, 1);
+            renderPreviews();
+            updateFileCount();
+        };
+
+        item.appendChild(img);
+        item.appendChild(sizeLabel);
+        item.appendChild(removeBtn);
+        previewContainer.appendChild(item);
+    });
+
+    updateFileCount(); // ← ここで枚数更新
+}
+
+
+// 画像選択時の処理
+imageUpload.addEventListener("change", function () {
+    const files = Array.from(this.files);
+    let totalSize = selectedFiles.reduce((sum, f) => sum + f.size, 0);
+
+    for (const file of files) {
+
+        if (!file.type.startsWith("image/")) continue;
+
+        // ★ 枚数制限
+        if (selectedFiles.length >= MAX_FILES) {
+            alert("アップロードできる画像は最大6枚までです");
+            clearAllImages();
+            return;
+        }
+
+        // ★ 1枚の容量制限
+        if (file.size > MAX_FILE_SIZE) {
+            alert(`「${file.name}」は5MBを超えています`);
+            clearAllImages();
+            return;
+        }
+
+        // ★ 合計容量制限
+        if (totalSize + file.size > MAX_TOTAL_SIZE) {
+            alert("画像の合計サイズが20MBを超えています");
+            clearAllImages();
+            return;
+        }
+
+        selectedFiles.push(file);
+        totalSize += file.size;
+    }
+
+    renderPreviews();
+});
+
+
+// 全削除
+function clearAllImages() {
+    selectedFiles = [];
+    imageUpload.value = "";
+    previewContainer.innerHTML = "";
+    updateFileCount();
+}
+
+
+// 送信時に selectedFiles を form に反映
+form.addEventListener("submit", function () {
+    const dataTransfer = new DataTransfer();
+
+    selectedFiles.forEach(file => {
+        dataTransfer.items.add(file);
+    });
+
+    imageUpload.files = dataTransfer.files;
+});
+
+//画像の制限
+document.getElementById("imageUpload").addEventListener("change", function () { 
+	submitBtn = document.getElementsByClassName("submit-btn");
+	if (this.files.length > 6 | selectedFiles.length > 6) { alert("画像は6枚までです"); 
+	this.value = "";
+	selectedFiles = [];
+	renderPreviews();
+	
+	submitBtn.disabled = true;
+	return;
+	
+	} 
+	
+	submitBtn.disabled = false;
+});
+</script>
+
+</body>
+</html>

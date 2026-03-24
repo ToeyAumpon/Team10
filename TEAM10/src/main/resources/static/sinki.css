@@ -1,0 +1,198 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 20px;
+    background: #fff;
+    background: linear-gradient(to right, #F0B9DB, #AEC3EF);
+}
+
+/* scrollable */
+.form-wrapper {
+    position: fixed;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 520px;
+    height: calc(98vh - 70px);
+    padding: 20px;
+    overflow-y: auto; 
+    border:solid 1px white;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+.submit-btn:hover{
+    background-color: #fc5757;
+
+}
+.back-btn:hover{
+    background-color: #fc5757;
+}
+
+.form-wrapper::-webkit-scrollbar {
+    display: none;                
+}
+
+/* Back button */
+.backbutton{
+    position: fixed;
+    right: 20px;
+}
+.back-btn {
+    margin-top: 10px;
+    padding: 7px;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: rgb(244, 240, 240);
+    font-weight: bold;
+}
+
+.container {
+    text-align: center;
+ 
+}
+
+/* Labels */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+input:focus,
+textarea:focus {
+    border-width: 2px;     
+    border: 2px solid red; 
+}
+
+
+textarea {
+    height: 70px;
+    resize: none;
+}
+
+
+
+/* Upload area */
+.upload-box {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    margin-bottom: 10px;
+    
+}
+
+/* Preview container  */
+.preview-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+    overflow-y: auto;
+}
+
+
+
+/* Preview images */
+.preview-container img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.submit-btn {
+    width: 50%;
+    max-width: 150px;
+    padding: 7px;
+    font-size: 1.2rem;
+    background: rgb(234, 235, 237);
+    border: 3px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.submit-btn:hover{
+    background-color: #fc5757;
+
+}
+.remove-btn{
+    color: red;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+
+}
+
+
+
+
+
+
+
+
+/* アップロード枠の中にボタンを収める */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* カスタムボタン（押した感触あり） */
+.custom-file-btn {
+    width: 30%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+
+    /* 押した感触 */
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 0 #2f6bb2;
+}
+
+/* 押したときに沈む */
+.custom-file-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #2f6bb2;
+}
+
+/* input を透明にしてボタンの上に重ねる */
+#imageUpload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}

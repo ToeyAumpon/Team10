@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProjectTagsMapper">
+
+    <!-- タグを保存 -->
+    <insert id="insert"
+            parameterType="com.example.demo.mapper.ProjectTags"
+            useGeneratedKeys="true"
+            keyProperty="tag_id">
+        INSERT INTO TAGS (tag_name)
+        VALUES (#{tag_name})
+    </insert>
+
+    <!-- 全タグを取得 -->
+    <select id="findAll"
+            resultType="com.example.demo.mapper.ProjectTags">
+        SELECT * FROM TAGS ORDER BY tag_id
+    </select>
+
+    <!-- タグIDで1件取得 -->
+    <select id="findByTagName"
+            parameterType="string"
+            resultType="com.example.demo.mapper.ProjectTags">
+        SELECT * FROM TAGS WHERE tag_name = #{tag_name}
+    </select>
+	
+	<insert id="insertPostTag">
+		INSERT INTO POST_TAGS (post_id, tag_id)
+		VALUES (#{post_id}, #{tag_id})
+	</insert>
+
+</mapper>

@@ -1,0 +1,41 @@
+/*ユーザーテーブル*/
+CREATE TABLE IF NOT EXISTS USERS (
+    user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    roles VARCHAR(200)
+);
+
+/*投稿テーブル*/
+CREATE TABLE IF NOT EXISTS POSTS(
+    post_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    username VARCHAR(50),
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    tag TEXT,
+    post_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES USERS(user_id)
+);
+
+/*画像テーブル*/
+CREATE TABLE IF NOT EXISTS IMAGES (
+    image_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    post_id BIGINT NOT NULL,
+    image_path VARCHAR(255), 
+    FOREIGN KEY (post_id) REFERENCES POSTS(post_id)
+);
+
+/*タグテーブル*/
+CREATE TABLE IF NOT EXISTS TAGS (
+    tag_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(255) NOT NULL
+);
+
+/*投稿タグテーブル*/
+CREATE TABLE IF NOT EXISTS POST_TAGS (
+    post_id BIGINT NOT NULL,
+    tag_id BIGINT NOT NULL
+);

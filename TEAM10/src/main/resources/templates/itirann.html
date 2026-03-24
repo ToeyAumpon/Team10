@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一覧表示画面</title>
+    <link rel="stylesheet" href="/itirann.css">
+
+    <!--googlefont-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+
+<!-- 新規投稿・検索・並び替え -->
+<div class="sinnkikensaku">
+
+    <div class="sinnkitoukoubutton">
+        <button id="sinnkitoukou">新規投稿</button>
+		<br>
+		<form th:action="@{/logout}" method="post" style="display:inline;">
+			    <button class="logout-btn" type="submit" button>ログアウト</button>
+			</form>
+    </div>
+	
+
+    <div class="kensakubox">
+        <form action="/result" method="get">
+            <label for="kensaku" class="kensaku">検索🔎</label>
+            <input type="text" id="kensaku" name="kensaku" placeholder="キーワードを入力してください">
+        </form>
+    </div>
+	
+
+    <!-- ✅ SORT FIXED -->
+	<div class="sortButton">
+	    <a class="sort-link"
+	       th:href="@{/itirann(sort=${sort == 'desc' ? 'asc' : 'desc'})}"
+	       th:text="${sort == 'desc' ? '古い順▼' : '新着順▼'}">
+	    </a>
+	</div>
+
+</div>
+
+<!-- 投稿一覧 -->
+<div class="post-list">
+
+
+	<div th:each="post:${posts}" class="PostBox" th:attr="data-date=${#strings.replace(post.post_date,'/','-')}">
+		<div class="mozimatome">
+		
+			<div class="daimei">
+				<a class="user" th:href="@{/toukousya/{name}(name=${post.username})}">
+				@[[${post.username}]]
+				</a>
+				<span class="daimeiAAA">[[${post.title}]]</span>
+			</div>
+
+            <div class="bunsyou">[[${post.content}]]</div>
+
+			<a class="hash" th:href="@{/result_tags/{tag}(tag=${post.tag})}">#[[${post.tag}]]</a>
+
+            <div class="gazou">
+                <img th:each="img : ${post.images}"
+                     th:src="@{'/images/' + ${img.image_path}}"
+                     class="gazou1">
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    // 新規投稿画面へ
+    const sinkitoukou = document.getElementById("sinnkitoukou");
+    sinkitoukou.addEventListener("click", function () {
+        window.location.href = "/sinki";
+    });
+
+    // 検索
+    const kensaku = document.getElementById("kensaku");
+    kensaku.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+			const keyword = encodeURIComponent(kensaku.value); 
+			window.location.href = "/result?kensaku=" + keyword;
+        }
+    });
+
+
+ 
+
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProjectPost_TagsMapper">
+
+
+
+    <!-- 投稿にタグを紐づける -->
+    <insert id="insert"
+            parameterType="com.example.demo.mapper.ProjectPost_Tags">
+        INSERT INTO POST_TAGS (post_id, tag_id)
+        VALUES (#{post_id}, #{tag_id})
+    </insert>
+
+    <!-- 投稿IDに紐づくタグ一覧を取得 -->
+    <select id="findByPostId"
+            parameterType="long"
+            resultType="com.example.demo.mapper.ProjectPost_Tags">
+        SELECT * FROM POST_TAGS
+        WHERE post_id = #{post_id}
+    </select>
+
+    <!-- タグIDに紐づく投稿一覧を取得（必要なら） -->
+    <select id="search"
+        parameterType="string"
+        resultType="com.example.demo.mapper.ProjectPosts">
+    SELECT *
+    FROM posts
+    WHERE title   LIKE CONCAT('%', #{keyword}, '%')
+       OR content LIKE CONCAT('%', #{keyword}, '%')
+       OR tag     LIKE CONCAT('%', #{keyword}, '%')
+    ORDER BY post_date DESC
+	</select>
+
+
+
+</mapper>

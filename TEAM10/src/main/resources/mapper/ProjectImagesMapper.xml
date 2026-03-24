@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProjectImagesMapper">
+
+
+    <!-- 画像を保存 -->
+    <insert id="insert"
+            parameterType="com.example.demo.mapper.ProjectImages"
+            useGeneratedKeys="true"
+            keyProperty="image_id">
+        INSERT INTO IMAGES (post_id, image_path)
+        VALUES (#{post_id}, #{image_path})
+    </insert>
+
+    <!-- 投稿IDに紐づく画像一覧を取得 -->
+    <select id="findByPostId"
+            parameterType="long"
+            resultType="com.example.demo.mapper.ProjectImages">
+        SELECT * FROM IMAGES
+        WHERE post_id = #{post_id}
+    </select>
+
+    <!-- 画像IDで1件取得 -->
+    <select id="findById"
+            parameterType="long"
+            resultType="com.example.demo.mapper.ProjectImages">
+        SELECT * FROM IMAGES
+        WHERE image_id = #{image_id}
+    </select>
+
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.ProjectPostsMapper">
+
+    <!-- IDで取得 -->
+    <select id="findById"
+            parameterType="long"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        WHERE post_id = #{post_id}
+    </select>
+
+    <!-- 投稿INSERT -->
+    <insert id="insert"
+            parameterType="com.example.demo.mapper.ProjectPosts"
+            useGeneratedKeys="true"
+            keyProperty="post_id">
+        INSERT INTO POSTS (user_id, username, title, content, tag)
+        VALUES (#{user_id}, #{username}, #{title}, #{content}, #{tag})
+    </insert>
+
+    <!-- デフォルト（新着順） -->
+    <select id="findAll"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        ORDER BY post_date DESC
+    </select>
+
+
+    
+    <!-- 検索機能 -->
+<!-- 	<select id="search"-->
+<!--        parameterType="string"-->
+<!--        resultType="com.example.demo.mapper.ProjectPosts">-->
+<!--    SELECT DISTINCT p.*-->
+<!--    FROM posts p-->
+<!--    LEFT JOIN post_tags pt ON p.post_id = pt.post_id-->
+<!--    LEFT JOIN tags t ON pt.tag_id = t.tag_id-->
+<!--    WHERE-->
+<!--        p.title   LIKE CONCAT('%', #{keyword}, '%')-->
+<!--     OR p.content LIKE CONCAT('%', #{keyword}, '%')-->
+<!--     OR t.tag_name LIKE CONCAT('%', #{keyword}, '%')-->
+<!--     <where> -->
+<!--	     <if test="keyword != null and keyword != ''"> -->
+<!--	     (p.title LIKE CONCAT('%', #{keyword}, '%') -->
+<!--	     OR p.content LIKE CONCAT('%', #{keyword}, '%') -->
+<!--	     OR t.tag_name LIKE CONCAT('%', #{keyword}, '%')) -->
+<!--	     </if> -->
+<!--     </where>-->
+<!--	</select>-->
+	
+	<!-- 投稿者名で投稿一覧を取得 -->
+<select id="findByUsername"
+parameterType="string"
+resultType="com.example.demo.mapper.ProjectPosts">
+SELECT post_id, user_id, username, title, content, tag, post_date
+FROM POSTS
+WHERE username = #{username}
+ORDER BY post_id DESC
+</select>
+	
+    
+
+<select id="findByTagName" parameterType="string" resultType="com.example.demo.mapper.ProjectPosts">
+SELECT DISTINCT p.* 
+FROM posts p 
+JOIN post_tags pt ON p.post_id = pt.post_id 
+JOIN tags t ON pt.tag_id = t.tag_id
+<!--        SELECT * FROM TAGS WHERE tag_name = #{tag}-->
+WHERE t.tag_name = #{tag}
+</select>
+    
+
+<!--     検索機能（統合版） -->
+<!--    <select id="search"-->
+<!--            parameterType="string"-->
+<!--            resultType="com.example.demo.mapper.ProjectPosts">-->
+<!--        SELECT DISTINCT p.*-->
+<!--        FROM posts p-->
+<!--        LEFT JOIN post_tags pt ON p.post_id = pt.post_id-->
+<!--        LEFT JOIN tags t ON pt.tag_id = t.tag_id-->
+<!--        WHERE-->
+<!--            p.title   LIKE CONCAT('%', #{keyword}, '%')-->
+<!--         OR p.content LIKE CONCAT('%', #{keyword}, '%')-->
+<!--         OR t.tag_name LIKE CONCAT('%', #{keyword}, '%')-->
+<!--        ORDER BY p.post_date DESC-->
+<!--    </select>-->
+
+
+    <!-- 新着順（明示） -->
+    <select id="findAllOrderByDateDesc"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        ORDER BY post_date DESC
+    </select>
+
+    <!-- 古い順 -->
+    <select id="findAllOrderByDateAsc"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        ORDER BY post_date ASC
+    </select>
+
+    <!-- ユーザーIDで取得 -->
+    <select id="findByUserId"
+            parameterType="long"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        WHERE user_id = #{user_id}
+        ORDER BY post_date DESC
+    </select>
+
+
+ 
+
+<!--     検索 -->
+    <select id="search"
+            parameterType="string"
+            resultType="com.example.demo.mapper.ProjectPosts">
+        SELECT post_id, user_id, username, title, content, tag, post_date
+        FROM POSTS
+        WHERE title LIKE CONCAT('%', #{keyword}, '%')
+        OR content LIKE CONCAT('%', #{keyword}, '%')
+<!--        OR tag LIKE CONCAT('%', #{keyword}, '%')-->
+        ORDER BY post_date DESC
+    </select>
+
+</mapper>
+

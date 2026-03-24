@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+
+	<style>
+		body {
+		    margin: 0;
+		    /* background-color:  dodgerblue; */
+		    background: linear-gradient(to right, #f0b9db, #aec3ef);
+		        
+
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    min-height: 90vh;
+
+		}
+
+		.form-container {
+		    border-radius: 10px; 
+		    padding: 30px; 
+		    background-color: #ffffff;
+		    width: 90%;
+		    max-width: 600px;
+		    /* box-shadow: 0px 10px 15px gray; */
+		    
+		}
+		/* .form-container:hover{
+		    box-shadow: 0px 8px 15px rgb(255, 233, 233);
+		} */
+
+		.login-container {
+		    width: 600px;
+		    text-align: center;
+		}
+		.form-container h1 {
+		    color: #000000;
+		    margin-bottom: 80px; 
+		    letter-spacing: 2px;
+		    /* white-space: nowrap; */
+		}
+
+		.form-row {
+		    display: flex;
+		    align-items: center;    
+		    justify-content: center;
+		    margin-bottom: 30px;
+		}
+
+		.form-row label {
+		    width: 150px;
+		    text-align: right;
+		    margin-right: 20px;
+		    color: #000000;
+		    font-size: 18px;
+		}
+
+		.form-row input {
+		    width: 300px;
+		    height: 36px;
+		    border-radius: 6px;
+		    /* border: 2px solid #000000; */
+		    padding: 5px 10px;
+		    font-size: 16px;
+		}
+
+		.login-button {
+		    margin-top: 40px;
+		    width: 160px;
+		    height: 55px;
+		    font-size: 18px;
+		    font-weight: bold;
+
+		    /* background-color: #ffffff; */
+		    border: 2px solid #000000;
+		    border-radius: 12px;
+		    color: #030303;
+		    cursor: pointer;
+		}
+
+		.login-button:hover {
+		    background-color: #fc5757;
+		}
+		.register {
+		    margin-top: 30px;
+		    text-align: right;
+
+		}
+
+		.register button {
+		    color: #000000;
+		    /* background: #ffffff; */
+		    text-decoration: none;
+		    font-size: 14px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		}   
+
+		.register button:hover {
+		    background-color: #fc5757;
+		}
+		h2 {
+		    white-space: nowrap;
+		}
+		.error{
+			color: #fc5757;
+		}
+		
+
+		@media (max-width: 768px) { 
+		    body {
+		        flex-direction: column;
+		        height: auto;
+		        padding: 20px;
+		    }
+
+		    .login-container {
+		        width: 100%;
+		        padding: 10px;
+		        box-sizing: border-box;
+		    }
+
+		    .form-row {
+		        flex-direction: column;
+		        align-items: flex-start;
+		    }
+
+		    .form-row label {
+		        width: 100%;
+		        text-align: left;
+		        margin-bottom: 10px;
+		    }
+
+		    .form-row input {
+		        width: 100%;
+		    }
+
+		    .login-button {
+		        width: 100%;
+		    }
+
+		    .register {
+		        text-align: center;
+		    }
+
+		    h1 {
+		        white-space: normal;
+		    }
+		}
+	</style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="form-container">
+
+            <h2>おすすめ共有コミュニティへようこそ！</h2>
+
+            <!-- ログアウト時のメッセージ -->
+            <div th:if="${param.logout}" class="error"></div>
+
+            <!-- ログイン失敗時のメッセージ -->
+            <div th:if="${param.error}" class="error">メールアドレスまたはパスワードが正しくありません</div>
+
+            <!-- Spring Security のログイン処理 -->
+            <form th:action="@{/login}" method="post">
+
+                <div class="form-row">
+                    <label for="email"><b>メールアドレス：</b></label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="password"><b>パスワード：</b></label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <!-- ログインボタン（itirann.html に飛ばさない） -->
+                <button class="login-button" type="submit">ログイン</button>
+            </form>
+
+            <div class="register">
+                <button class="register-button" onclick="location.href='/sign_up'">新規登録はこちら！</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

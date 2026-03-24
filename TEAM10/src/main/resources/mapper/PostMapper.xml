@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.PostMapper">
+	<insert id="insert" parameterType="com.example.demo.entity.Post">
+		INSERT INTO POSTS (title, content, tag, post_date ,image_path)
+		VALUES (#{title}, #{content}, #{tag}, #{post_date} ,#{image_path})
+	</insert>
+
+	<select id="findAll" resultType="com.example.demo.entity.Post">
+		SELECT post_id, title, content, tag, post_date, image_path
+		FROM  POSTS
+		ORDER BY post_id DESC;
+	</select>
+
+</mapper>

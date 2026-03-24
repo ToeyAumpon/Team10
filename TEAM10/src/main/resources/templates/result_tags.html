@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>タグ検索結果画面</title>
+    <link rel="stylesheet" th:href="@{/tobe_style.css}">
+</head>
+<body>
+    <header>
+        <button onclick="location.href='/itirann'">
+            一覧表示に戻る
+        </button>
+		<div class="post-list">
+
+		  <div th:each="post : ${posts}" class="PostBox">
+		    <div class="mozimatome">
+
+		      <div class="daimei">
+				<a class="user"th:href="@{/toukousya/{name}(name=${post.username})}">
+				@[[${post.username}]]
+				</a>
+		        <span class="daimeiAAA">[[${post.title}]]</span>
+		      </div>
+
+		      <div class="bunsyou">[[${post.content}]]</div>
+
+			  <p class="hash" th:href="@{/result_tags/{tag}(tag=${post.tag})}">
+			  #[[${post.tag}]]
+			  </p>
+
+		      <div class="gazou">
+		        <img th:each="img : ${post.images}" th:src="@{'/images/' + ${img.image_path}}" class="gazou1">
+		      </div>
+
+		    </div>
+		  </div>
+
+		</div>
+
+		<div th:if="${#lists.isEmpty(posts)}">
+		    <h1>No data found</h1>
+		</div>
+
+    </header>
+</body>
+</html>

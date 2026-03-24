@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProjectUserMapper">
+
+  <select id="findByUsername" resultType="com.example.demo.mapper.ProjectUser">
+    SELECT * FROM USERS WHERE email = #{email}
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="user_id">
+    INSERT INTO USERS (username, email, password, enabled, roles)
+    VALUES (#{username}, #{email}, #{password}, #{enabled}, #{roles})
+  </insert>
+  
+  <select id="existsByEmail" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM USERS
+    WHERE email = #{email}
+  </select>
+  
+    <select id="existsByUsername" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM USERS
+    WHERE username = #{username}
+  </select>
+  
+	
+</mapper>

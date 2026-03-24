@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投稿者別表示</title>
+    <link rel="stylesheet" href="/toukousya.css">
+</head>
+
+<body>
+    <!-- 戻るボタン -->
+    <header>
+        <button onclick="location.href='/itirann'" class="backbutton">
+            一覧表示に戻る
+        </button>
+        <h1>ユーザー名：@[[${username}]]</h1>
+    </header>
+
+    <main>
+
+        <!-- 投稿一覧 -->
+        <div class="post-list">
+
+            <div th:each="post:${posts}" class="PostBox">
+                <div class="mozimatome">
+
+                    <div class="daimei">
+                        <p class="user" th:href="@{/toukousya/{name}(name=${post.username})}">
+                            @[[${post.username}]]
+                        </p>
+                        <span class="daimeiAAA">[[${post.title}]]</span>
+                    </div>
+
+                    <div class="bunsyou">[[${post.content}]]</div>
+
+                    <a class="hash" th:href="@{/result_tags/{tag}(tag=${post.tag})}">#[[${post.tag}]]</a>
+
+                    <div class="gazou">
+                        <img th:each="img : ${post.images}"
+                             th:src="@{'/images/' + ${img.image_path}}"
+                             class="gazou1">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</body>
+</html>

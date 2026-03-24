@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    min-height: 100vh;
+    background: linear-gradient(to right, #F0B9DB, #AEC3EF);
+}
+.box{
+    width: 90%;          /* 画面に合わせて伸縮 */
+    max-width: 400px;    /* PCではこれ以上広がらない */
+    padding: 50px;
+    border-radius: 10px;
+    border:solid 1px white;
+    background-color: white;
+    
+
+}
+
+header h2{
+    text-align: center;
+}
+
+.user-login{
+    padding-left: 32px;
+    padding-bottom: 30px;
+    border-width: 2px;
+}
+
+.user-login label{
+    border-width: 2px;
+} 
+
+.user-register{
+    padding-bottom: 30px;
+}
+
+.error{ /*パスワード比較*/
+    color: red;
+    font-size: 14px;
+
+}
+
+
+.submit{
+    text-align: center;
+    padding-top: 15px;
+    
+}
+.submit-button{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: solid 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.submit-button:hover{
+    background-color: #fc5757;
+}
+
+footer{
+    padding-top: 10px;display: flex;
+    justify-content: flex-end;
+    font-size: small;
+}
+.link{
+    background-color: rgb(244, 240, 240);
+    padding: 5px;
+    font-size: 14px;
+    border: solid 2px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.link:hover{
+    background-color: #fc5757;
+}
+
+@media screen and (max-width: 768px) {
+
+    body {
+        margin: 0;
+        padding: 0;
+        flex-flow: column;
+    }
+
+    /* 全体ボックス */
+    .box {
+        width: 80%;
+        margin: 40px auto;
+        padding: 20px;
+        
+        border: solid 1px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    /* 入力エリア */
+    .user-login {
+        padding-left: 0;
+        width: 100%;
+    }
+
+    /* inputをスマホ幅いっぱいに */
+    input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px; /* ← 重要：ズーム防止 */
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    /* エラーメッセージ */
+    .error {
+        font-size: 13px;
+        color: red;
+        text-align: left;
+    }
+
+    /* 送信ボタン */
+    .submit {
+        text-align: center;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 20px;
+        margin-left: 10px;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    
+
+    /* 下部リンク */
+    footer {
+        font-size: small;
+        text-align: center;
+    }
+}

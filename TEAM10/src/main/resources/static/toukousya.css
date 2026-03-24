@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+body{
+    background: linear-gradient(to right, #F0B9DB, #AEC3EF);
+}
+
+/* 戻るボタン */
+.backbutton{
+    border:5px solid gray;
+    border-radius: 10px;
+    padding:30px 20px;
+    background-color: white;
+    cursor:pointer;
+    font-size:20px;
+    margin:20px;
+}
+
+.backbutton:hover{
+    background-color: #FC5757;
+}
+
+header h1{
+    color:white;
+    text-align:center;
+    margin:0;
+}
+
+/* 投稿ボックス */
+.PostBox{
+    width:75%;
+    height:auto;
+    border:3px solid black;
+    margin:0 auto;
+    margin-top:40px;
+    border-radius:30px;
+    padding-bottom: 20px;
+    background-color:white;
+    text-shadow:3px 3px 2px #CCCCCC;
+}
+
+/* 投稿文字まとめ */
+.mozimatome{
+    margin-left:35px;
+    margin-top:15px;
+}
+
+/* ユーザー名 */
+.user{
+    font-size:17px;
+    text-decoration:none;
+}
+
+/* 本文 */
+.bunsyou{
+    line-height:1.6;
+    font-size:20px;
+}
+
+/* タイトル */
+.daimeiAAA{
+    padding-left:10px;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.daimei{
+    display: flex;
+    align-items: center; /* 縦位置を揃える */
+    gap: 10px; /* ユーザー名とタイトルの間に余白 */
+}
+
+/* 画像グリッド */
+.gazou{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+    margin-top:15px;
+}
+
+.gazou1{
+    width:100%;
+    height:350px;
+    object-fit:contain;
+    border-radius:10px;
+}
+
+/* スマホ対応 */
+@media screen and (max-width:900px){
+
+    .PostBox{
+        width:92%;
+        height:auto;
+        padding-bottom:40px;
+        margin-top:20px;
+    }
+
+    .daimeiAAA{
+        font-size:25px;
+    }
+
+    .bunsyou{
+        font-size:18px;
+        line-height:1.8;
+    }
+
+    /* 画像1列 */
+    .gazou{
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .gazou1{
+        height:350px;
+        object-fit:cover;
+    }
+}

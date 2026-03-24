@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>アプリ名</title>
+    <link rel="stylesheet" th:href="@{/sample.css}">
+</head>
+<body>
+    <header th:fragment="navbar">
+        <h1>サイトタイトル</h1>
+        <nav>
+            <a th:href="@{/}">ホーム</a>
+            <a th:href="@{/about}">概要</a>
+        </nav>
+    </header>
+
+    <footer th:fragment="footer">
+        <p>&copy; 2024 学校名</p>
+    </footer>
+</body>
+</html>
